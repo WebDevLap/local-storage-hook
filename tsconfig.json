@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "strict": true, // Включаем строгий режим проверки типов
+    "outDir": "./dist", // Каталог для скомпилированных файлов
+    "rootDir": "./src",
+    "target": "ESNext",
+    "module": "ES6",
+    "moduleResolution": "node",
+    "allowJs": true,
+    "checkJs": false,
+  }
+}
