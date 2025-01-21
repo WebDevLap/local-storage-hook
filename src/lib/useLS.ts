@@ -8,7 +8,6 @@ type LSStringedDataType = {
   data: string;
 };
 
-
 export function useLS<T extends TypeLS>(
   name: string,
   defValue: T
@@ -22,6 +21,7 @@ export function useLS<T extends TypeLS>(
 
 
 
+  
   function createModifiedState(defState: any, state: any): TypeLS {
     if (typeof defState === "number" && typeof state === "number")
       return state as TypeLS;
@@ -44,7 +44,7 @@ export function useLS<T extends TypeLS>(
   }
 
   function getState() {
-    return state as  T;
+    return state as T;
   }
 
   function wrapperLSItem(data: TypeLS) {
@@ -72,10 +72,12 @@ export function useLS<T extends TypeLS>(
 
   function parseLSItemWrapper(str: string | null): LSStringedDataType | null {
     if (!str) return null;
-    return JSON.parse(str, (key, value) => {
-      if (key === "data") return JSON.stringify(value);
-      return value;
-    });
+    const parsed: LSStringedDataType = JSON.parse(str);
+    if (parsed.typeof === "string") return parsed;
+    return {
+      typeof: parsed.typeof,
+      data: JSON.stringify(parsed.data),
+    };
   }
 
   function getParsedData(lsItem: string | null): T | undefined {

@@ -52,11 +52,13 @@ export function useLS(name, defValue) {
     function parseLSItemWrapper(str) {
         if (!str)
             return null;
-        return JSON.parse(str, (key, value) => {
-            if (key === "data")
-                return JSON.stringify(value);
-            return value;
-        });
+        const parsed = JSON.parse(str);
+        if (parsed.typeof === "string")
+            return parsed;
+        return {
+            typeof: parsed.typeof,
+            data: JSON.stringify(parsed.data),
+        };
     }
     function getParsedData(lsItem) {
         const lsWrapperParsed = parseLSItemWrapper(lsItem);
